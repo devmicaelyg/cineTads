@@ -2,7 +2,7 @@
 
 Esse sistema é um trabalho da faculdade que tem como objetivo o uso do Java para implementar uma solução de algum problema usando matrizes. 
 
-### Apresentação da idéia: 
+### Apresentação da ideia: 
 O problema que escolhemos foi relacionado a superlotação de salas de cinema. Dessa forma, o nosso sistema faz o controle de quantas cadeiras ainda estão disponiveis nas salas. 
 
 ### Uso
