@@ -6,6 +6,7 @@ Esse sistema é um trabalho da faculdade que tem como objetivo o uso do Java par
 O problema que escolhemos foi relacionado a superlotação de salas de cinema. Dessa forma, o nosso sistema faz o controle de quantas cadeiras ainda estão disponiveis nas salas. 
 
 O gif demonstra a ideia:
+
 <img src="https://media.giphy.com/media/bqNp4iji8iQrl4qFl5/giphy.gif" width="250" height="250" />
 
 ### Uso
