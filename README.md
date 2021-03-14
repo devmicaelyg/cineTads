@@ -5,7 +5,7 @@ Esse sistema é um trabalho da faculdade que tem como objetivo o uso do Java par
 ### Apresentação da ideia: 
 O problema que escolhemos foi relacionado a superlotação de salas de cinema. Dessa forma, o nosso sistema faz o controle de quantas cadeiras ainda estão disponiveis nas salas. 
 
-<img src="https://raw.githubusercontent.com/devmicaelyg/cineTads/dev-micaely/src/assets/cineTads.gif" width="250" height="250" />
+<img src="https://media.giphy.com/media/bqNp4iji8iQrl4qFl5/giphy.gif" width="250" height="250" />
 
 ### Uso
 Para verificar o andamento do projeto é só fazer os seguintes passos: 
