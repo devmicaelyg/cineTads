@@ -17,7 +17,8 @@ Para verificar o andamento do projeto é só fazer os seguintes passos:
      - Abra o codigo fonte na sua IDE de preferencia e execute. 
     
 ### Versão 
-O código mais atualizado ficará sempre na master.
+Como o projeto ainda está em desenvolvimento, pode ter alterações diariamente. 
+O código mais atualizado ficará sempre na master, então lembre-se de atualizar o seu repositório local com ela :)
 
 #### Codificadores: 
 Micaely Gusmão e John Costa
