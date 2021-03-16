@@ -10,7 +10,7 @@ public class ControleCadeiras {
 
 		preencherMatriz();
 
-		int assentoEscolhido;
+		int assentoEscolhido, escolherCadeira;
 		String nomeCliente;
 		String escolhaMenuFilme = "";
 		String filmes[] = { "S", "Jogos Vorazes", "A Volta Dos Que Não Foram" };
@@ -35,43 +35,69 @@ public class ControleCadeiras {
 				nomeCliente + ", informe o filme que deseja assistir:" + "\n1-" + filmes[0] + "\n2-" + filmes[1] + "\n3-"
 						+ filmes[2] + "\n" + "Caso queira cancelar a compra, digite: 4");
 		
+		escolherCadeira = conversorInt(escolhaMenuFilme);
+		
+		switch(escolherCadeira) {
+		case 1:
+			assentoEscolhido = conversorInt(
+					JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
+			atualizarAssentos(assentoEscolhido);
+			saida = escreverMatriz();
+			
+			JOptionPane.showMessageDialog(null, "Modificada " + saida);
 
-		do {
-			escolhaMenuFilme = JOptionPane.showInputDialog(
-					nomeCliente + ", informe o filme que deseja assistir:" + "\n" + filmes[0] + "\n" + filmes[1] + "\n"
-							+ filmes[2] + "\n" + "Caso queira cancelar a compra, digite: " + CANCEL_COMPRA);
+		case 2:
+			assentoEscolhido = conversorInt(
+					JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
+			atualizarAssentos(assentoEscolhido);
+			saida = escreverMatriz();
+			
+			JOptionPane.showMessageDialog(null, "Modificada " + saida);
+		case 3: 
+			assentoEscolhido = conversorInt(
+					JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
+			atualizarAssentos(assentoEscolhido);
+			saida = escreverMatriz();
+			
+			JOptionPane.showMessageDialog(null, "Modificada " + saida);
+		}
 
-			if (escolhaMenuFilme.equals(CANCEL_COMPRA)) {
-				JOptionPane.showMessageDialog(null, "Compra de ingressos cancelada!");
-				return;
-
-			} else if (escolhaMenuFilme.equals(filmes[0])) {
-				assentoEscolhido = conversorInt(
-						JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
-				atualizarAssentos(assentoEscolhido);
-				saida = escreverMatriz();
-				JOptionPane.showMessageDialog(null, "Modificada " + saida);
-
-			} else if (escolhaMenuFilme.equals(filmes[1])) {
-				JOptionPane.showMessageDialog(null, "Filme 2");
-				return;
-
-			} else if (escolhaMenuFilme.equals(filmes[2])) {
-				JOptionPane.showMessageDialog(null, "Filme 3");
-				return;
-			}
-
-			if (escolhaMenuFilme.isEmpty() && escolhaMenuFilme != filmes[0] || escolhaMenuFilme != filmes[1]
-					|| escolhaMenuFilme != filmes[2]) {
-				JOptionPane.showMessageDialog(null, "Digite o nome do filme ou a opção de cancelar!");
-			}
-
-		} while (escolhaMenuFilme.isEmpty() && escolhaMenuFilme != filmes[0] || escolhaMenuFilme != filmes[1]
-				|| escolhaMenuFilme != filmes[2]);
+//		do {
+//			escolhaMenuFilme = JOptionPane.showInputDialog(
+//					nomeCliente + ", informe o filme que deseja assistir:" + "\n" + filmes[0] + "\n" + filmes[1] + "\n"
+//							+ filmes[2] + "\n" + "Caso queira cancelar a compra, digite: " + CANCEL_COMPRA);
+//
+//			if (escolhaMenuFilme.equals(CANCEL_COMPRA)) {
+//				JOptionPane.showMessageDialog(null, "Compra de ingressos cancelada!");
+//				return;
+//
+//			} else if (escolhaMenuFilme.equals(filmes[0])) {
+//				assentoEscolhido = conversorInt(
+//						JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
+//				atualizarAssentos(assentoEscolhido);
+//				saida = escreverMatriz();
+//				JOptionPane.showMessageDialog(null, "Modificada " + saida);
+//
+//			} else if (escolhaMenuFilme.equals(filmes[1])) {
+//				JOptionPane.showMessageDialog(null, "Filme 2");
+//				return;
+//
+//			} else if (escolhaMenuFilme.equals(filmes[2])) {
+//				JOptionPane.showMessageDialog(null, "Filme 3");
+//				return;
+//			}
+//
+//			if (escolhaMenuFilme.isEmpty() && escolhaMenuFilme != filmes[0] || escolhaMenuFilme != filmes[1]
+//					|| escolhaMenuFilme != filmes[2]) {
+//				JOptionPane.showMessageDialog(null, "Digite o nome do filme ou a opção de cancelar!");
+//			}
+//
+//		} while (escolhaMenuFilme.isEmpty() && escolhaMenuFilme != filmes[0] || escolhaMenuFilme != filmes[1]
+//				|| escolhaMenuFilme != filmes[2]);
 
 	}
 
-	public static void atualizarAssentos(int assentoEscolhido) {
+	public static Boolean atualizarAssentos(int assentoEscolhido) {
 		int coluna = 0;
 		int linha = 0;
 		boolean encontrado = false; 
@@ -88,6 +114,7 @@ public class ControleCadeiras {
 		
 			linha++;
 		} while (linha < assentos.length && !encontrado);
+		return encontrado;
 	}
 
 	public static String escreverMatriz() {
@@ -111,7 +138,6 @@ public class ControleCadeiras {
 			}
 		}
 	}
-	
 	
 	public static int conversorInt(String entrada) {
 		return Integer.parseInt(entrada);
