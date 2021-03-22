@@ -1,105 +1,177 @@
-import java.util.Scanner;
+import java.awt.Color;
+import java.util.*;
 
 import javax.swing.JOptionPane;
 
 public class ControleCadeiras {
 
-	private static int[][] assentos = new int[5][5];
+	// Mensagem inicial
+	public static void msgBemVindo() {
+		JOptionPane.showMessageDialog(null, "Cine Tads - O melhor do Brasil");
+	}
+
+	// Guardar nome
+	public static String getNome() {
+		String str;
+		while (true) {
+			str = JOptionPane.showInputDialog("Informe o seu nome:");
+			if (!str.matches("[A-z ]*")) {
+				JOptionPane.showMessageDialog(null, "Nome inválido, somente letras.");
+
+			} else {
+				return str;
+			}
+		}
+	}
+
+	// Guardar filme
+	public static String getFilme() {
+		String str;
+
+		while (true) {
+			str = JOptionPane.showInputDialog(
+					"Escolha o filme:\n[1] Star Wars\n[2] Jumanji\n[3] A trança dos carecas\n[4] Cancelar compra");
+			switch (str) {
+			case "1":
+				return "Star Wars";
+			case "2":
+				return "Jumanji";
+			case "3":
+				return "A trança dos carecas";
+			case "4":
+				JOptionPane.showMessageDialog(null, "Compra cancelada com sucesso!");
+				System.exit(0);
+			default:
+				JOptionPane.showMessageDialog(null, "Escolha uma opção válida!");
+			}
+		}
+	}
+
+	// Guardar assentos
+	public static void getAssentos(String nome) {
+		Boolean continuar = true; // Para sair do while sem usar continue
+		String assentos[][][] = new String[5][5][3], fileira[] = { "A", "B", "C", "D", "E" }, exibir = "", op = "";
+		int x = -1, y = -1;
+		int lotacao = 0;
+
+		// Gerar Matriz Assentos
+		for (int i = 0; i < assentos.length; i++) {
+			for (int j = 0; j < assentos[i].length; j++) {
+				for (int k = 0; k < 3; k++) {
+					assentos[i][j][0] = fileira[i]; // Posição X
+					assentos[i][j][1] = j + 1 + ""; // Posição Y
+					assentos[i][j][2] = "1"; // [1] Disponível; [0] Indisponível
+				}
+			}
+		}
+
+		while (continuar) {
+			// Exibir Matriz
+			exibir = "";
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (assentos[i][j][2] == "0") {
+						exibir += "[XX]    ";
+					} else {
+						exibir += "[" + assentos[i][j][0] + assentos[i][j][1] + "]    ";
+					}
+				}
+				exibir += "\n";
+			}
+
+			exibir += "Escolha uma cadeira:";
+			op = JOptionPane.showInputDialog(exibir);
+
+			// Verificações
+			try {
+				x = Arrays.asList(fileira).indexOf(op.charAt(0) + ""); // LETRA+NUMERO (A2)
+				y = Integer.parseInt(op.charAt(1) + "") - 1;
+			} catch (Exception err) {
+				JOptionPane.showMessageDialog(null, "Insira um assento válido!");
+			}
+
+			if (x < 0 || (y < 0 || y > 4)) { // Letra ou numero inválido
+				JOptionPane.showMessageDialog(null, "Insira um assento válido!");
+			}
+
+			// Reservando cadeira
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (assentos[i][j][0].equals(op.charAt(0) + "")) { // A1
+						if (assentos[i][j][1].equals(op.charAt(1) + "")) {
+							if (assentos[i][j][2].equals("1")) {
+								JOptionPane.showMessageDialog(null, "Reservado com sucesso!");
+								assentos[i][j][2] = "0";
+								lotacao++;
+							} else {
+								JOptionPane.showMessageDialog(null, "Assento já reservado!");
+							}
+						}
+					}
+
+				}
+			}
+
+			// Verificando lotação
+			if (lotacao == 25) {
+				JOptionPane.showMessageDialog(null, "Infelizmente todos os assentos ja foram reservados");
+				continuar = false;
+			}
+
+			if (continuar) {
+
+				op = JOptionPane.showInputDialog("Digite [S] para continuar ou qualquer outra tecla para finalizar...");
+
+				switch (op) {
+				case "S":
+				case "s":
+					continuar = true;
+					break;
+				default:
+					continuar = false;
+				}
+			}
+		}
+
+		// Resultado
+		double valor_reserva = 15;
+		int qtde_reservas = 0;
+		int tot = 0;
+		exibir = "";
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				if (assentos[i][j][2] == "0") {
+					tot += valor_reserva;
+					qtde_reservas++;
+					exibir += "[XX]    ";
+				} else {
+					exibir += "[" + assentos[i][j][0] + assentos[i][j][1] + "]    ";
+				}
+			}
+			exibir += "\n\n";
+		}
+
+		exibir += "\nObrigado " + nome + ".\nQuantidade Reservas: " + qtde_reservas + "x\nValor Total: R$ " + tot
+				+ "\n\nCine Tads Agradece!";
+		JOptionPane.showMessageDialog(null, exibir);
+
+	}
+
+	// Execução do codigo principal
 
 	public static void main(String[] args) {
+		String nomeCliente, filme;
 
-		preencherMatriz();
+		// Mensagem de boas vindas
+		msgBemVindo();
 
-		int assentoEscolhido, escolherCadeira;
-		String nomeCliente;
-		String escolhaMenuFilme = "";
-		String filmes[] = { "1- Star Wars", "2- Jogos Vorazes", "3- A Volta Dos Que NÃ£o Foram" };
-		String saida = escreverMatriz();
+		// Nome do cliente
+		nomeCliente = getNome();
 
-		JOptionPane.showMessageDialog(null, "Seja bem-vindo ao CineTads");
+		// Filme escolhido
+		filme = getFilme();
 
-		do {
-			nomeCliente = JOptionPane.showInputDialog("Infome o seu nome:");
-
-			if (!nomeCliente.matches("[A-z]*")) {
-				JOptionPane.showMessageDialog(null, "Digite um nome vÃ¡lido, somente com letras.");
-			}
-		} while (!nomeCliente.matches("[A-z]*"));
-
-		// Escolha do filme
-
-		escolhaMenuFilme = JOptionPane
-				.showInputDialog(nomeCliente + ", Informe o nÃºmero do filme que deseja assistir:" + "\n" + filmes[0] + "\n2-"
-						+ filmes[1] + "\n" + filmes[2] + "\n" + "Caso queira cancelar a compra, digite: 4");
-
-		escolherCadeira = conversorInt(escolhaMenuFilme);
-
-		switch (escolherCadeira) {
-		case 1:
-			assentoEscolhido = conversorInt(JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
-			atualizarAssentos(assentoEscolhido);
-			saida = escreverMatriz();
-
-			JOptionPane.showMessageDialog(null, "Modificada " + saida);
-
-		case 2:
-			assentoEscolhido = conversorInt(JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
-			atualizarAssentos(assentoEscolhido);
-			saida = escreverMatriz();
-
-			JOptionPane.showMessageDialog(null, "Modificada " + saida);
-		case 3:
-			assentoEscolhido = conversorInt(JOptionPane.showInputDialog(null, "Escolha a cadeira desejada: " + saida));
-			atualizarAssentos(assentoEscolhido);
-			saida = escreverMatriz();
-
-			JOptionPane.showMessageDialog(null, "Modificada " + saida);
-		}
+		// Reservar assentos
+		getAssentos(nomeCliente);
 	}
-
-	public static Boolean atualizarAssentos(int assentoEscolhido) {
-		int coluna = 0;
-		int linha = 0;
-		boolean encontrado = false;
-
-		do {
-			do {
-				if (assentos[linha][coluna] == assentoEscolhido) {
-					assentos[linha][coluna] = 0;
-					encontrado = true;
-				}
-
-				coluna++;
-			} while (coluna < assentos[linha].length && !encontrado);
-
-			linha++;
-		} while (linha < assentos.length && !encontrado);
-		return encontrado;
-	}
-
-	public static String escreverMatriz() {
-		String saida = "";
-
-		for (int linha = 0; linha < assentos.length; linha++) {
-			for (int coluna = 0; coluna < assentos[linha].length; coluna++) {
-				saida += "| " + assentos[linha][coluna];
-			}
-		}
-		return saida;
-	}
-
-	public static void preencherMatriz() {
-		int contador = 1;
-
-		for (int linha = 0; linha < assentos.length; linha++) {
-			for (int coluna = 0; coluna < assentos[linha].length; coluna++) {
-				assentos[linha][coluna] = contador++;
-			}
-		}
-	}
-
-	public static int conversorInt(String entrada) {
-		return Integer.parseInt(entrada);
-	}
-
 }
