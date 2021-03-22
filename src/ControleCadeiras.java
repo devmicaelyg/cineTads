@@ -50,10 +50,7 @@ public class ControleCadeiras {
 	// Guardar assentos
 	public static void getAssentos(String nome) {
 		Boolean continuar = true; // Para sair do while sem usar continue
-		String assentos[][][] = new String[5][5][3], 
-				fileira[] = { "A", "B", "C", "D", "E" }, 
-				exibir = "", 
-				op = "";
+		String assentos[][][] = new String[5][5][3], fileira[] = { "A", "B", "C", "D", "E" }, exibir = "", op = "";
 		int x = -1, y = -1;
 		int lotacao = 0;
 
@@ -105,6 +102,7 @@ public class ControleCadeiras {
 							if (assentos[i][j][2].equals("1")) {
 								JOptionPane.showMessageDialog(null, "Reservado com sucesso!");
 								assentos[i][j][2] = "0";
+								lotacao++;
 							} else {
 								JOptionPane.showMessageDialog(null, "Assento já reservado!");
 							}
@@ -115,19 +113,12 @@ public class ControleCadeiras {
 			}
 
 			// Verificando lotação
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 5; j++) {
-					if (assentos[i][j][2] == "0") {
-						lotacao++;
-						if (lotacao == 25) {
-							JOptionPane.showMessageDialog(null, "Infelizmente todos os assentos ja foram reservados");
-							continuar = false;
-						}
-					}
-				}
+			if (lotacao == 25) {
+				JOptionPane.showMessageDialog(null, "Infelizmente todos os assentos ja foram reservados");
+				continuar = false;
 			}
-			
-			if (continuar == true) {
+
+			if (continuar) {
 
 				op = JOptionPane.showInputDialog("Digite [S] para continuar ou qualquer outra tecla para finalizar...");
 
