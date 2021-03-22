@@ -9,8 +9,8 @@ public class ControleCadeiras {
 	public static void msgBemVindo() {
 		JOptionPane.showMessageDialog(null, "Cine Tads - O melhor do Brasil");
 	}
-	
-	//Guardar nome
+
+	// Guardar nome
 	public static String getNome() {
 		String str;
 		while (true) {
@@ -23,8 +23,8 @@ public class ControleCadeiras {
 			}
 		}
 	}
-	
-	//Guardar filme
+
+	// Guardar filme
 	public static String getFilme() {
 		String str;
 
@@ -46,15 +46,16 @@ public class ControleCadeiras {
 			}
 		}
 	}
-	
-	//Guardar assentos
+
+	// Guardar assentos
 	public static void getAssentos(String nome) {
-		Boolean flag = true; // Para sair do while sem usar continue
+		Boolean continuar = true; // Para sair do while sem usar continue
 		String assentos[][][] = new String[5][5][3], 
 				fileira[] = { "A", "B", "C", "D", "E" }, 
 				exibir = "", 
 				op = "";
 		int x = -1, y = -1;
+		int lotacao = 0;
 
 		// Gerar Matriz Assentos
 		for (int i = 0; i < assentos.length; i++) {
@@ -67,7 +68,7 @@ public class ControleCadeiras {
 			}
 		}
 
-		while (flag) {
+		while (continuar) {
 			// Exibir Matriz
 			exibir = "";
 			for (int i = 0; i < 5; i++) {
@@ -77,7 +78,6 @@ public class ControleCadeiras {
 					} else {
 						exibir += "[" + assentos[i][j][0] + assentos[i][j][1] + "]    ";
 					}
-
 				}
 				exibir += "\n";
 			}
@@ -114,15 +114,31 @@ public class ControleCadeiras {
 				}
 			}
 
-			op = JOptionPane.showInputDialog("Digite [S] para continuar ou qualquer outra tecla para finalizar...");
+			// Verificando lotação
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (assentos[i][j][2] == "0") {
+						lotacao++;
+						if (lotacao == 25) {
+							JOptionPane.showMessageDialog(null, "Infelizmente todos os assentos ja foram reservados");
+							continuar = false;
+						}
+					}
+				}
+			}
+			
+			if (continuar == true) {
 
-			switch (op) {
-			case "S":
-			case "s":
-				flag = true;
-				break;
-			default:
-				flag = false;
+				op = JOptionPane.showInputDialog("Digite [S] para continuar ou qualquer outra tecla para finalizar...");
+
+				switch (op) {
+				case "S":
+				case "s":
+					continuar = true;
+					break;
+				default:
+					continuar = false;
+				}
 			}
 		}
 
@@ -140,7 +156,6 @@ public class ControleCadeiras {
 				} else {
 					exibir += "[" + assentos[i][j][0] + assentos[i][j][1] + "]    ";
 				}
-
 			}
 			exibir += "\n\n";
 		}
